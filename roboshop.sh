@@ -3,7 +3,7 @@
 SG_ID="sg-0cfcd5040a31b76f2"
 AMI_ID="ami-0220d79f3f480ecf5"
 
-for instance i $@
+for instance in $@
 do
     instance_id=$( aws ec2 run-instances \
     --image-id $AMI_ID \        # Replace with your AMI ID
