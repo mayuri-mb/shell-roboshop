@@ -46,7 +46,7 @@ do
             "ResourceRecordSet": {
                 "Name": "'$RECORD_NAME'",
                 "Type": "A",
-                "TTL": 1
+                "TTL": 1,
                 "ResourceRecords": [
                 {
                  "Value": "'$IP'"
@@ -57,7 +57,7 @@ do
         ]
     }
     '
-    
+
     echo "Record updated for $instance"
 
 done  
