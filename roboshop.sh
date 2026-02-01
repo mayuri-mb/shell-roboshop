@@ -15,19 +15,19 @@ do
 
     if [ $instance == "frontend" ]; then
         IP=$(
-            aws ec2 describe-instances \
-            --instance-ids $instance_id \
-            --query 'Reservations[].Instances[].PublicIpAddress' \ 
-            --output text
+             aws ec2 describe-instances \
+             --instance-ids $instance_id \
+             --query 'Reservations[].Instances[].PublicIpAddress' \
+             --output text
         )
     else    
         IP=$(
             aws ec2 describe-instances \
-            --instance-ids $instance_id \
-            --query 'Reservations[].Instances[].PrivateIpAddress' \ 
-            --output text
+             --instance-ids $instance_id \
+             --query 'Reservations[].Instances[].PrivateIpAddress' \
+             --output text
         )    
     fi
 
-    echo " IP address: $IP"
+    echo "IP Address: $IP"
 done  
