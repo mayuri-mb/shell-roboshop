@@ -39,21 +39,25 @@ do
     --hosted-zone-id $ZONE_ID \
     --change-batch '
     {
-            "Comment": "Update record",
-            "Changes": [
+        "Comment": "Update record",
+        "Changes": [
+            {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "'$RECORD_NAME'",
+                "Type": "A",
+                "TTL": 1
+                "ResourceRecords": [
                 {
-                "Action": "UPSERT",
-                "ResourceRecordSet": {
-                    "Name": "'$RECORD_NAME'",
-                    "Type": "A",
-                    "TTL": 1
-                    "ResourceRecords": [
-                        { "Value": "'$IP'" }
-                    ]
+                 "Value": "'$IP'"
+                }
+                ]
                 }
             }
         ]
-    }'
+    }
+    '
+    
     echo "Record updated for $instance"
 
 done  
