@@ -39,6 +39,9 @@ do
     --hosted-zone-id $ZONE_ID \
     --change-batch '
     {
+            "Comment": "Update record",
+            "Changes": [
+                {
                 "Action": "UPSERT",
                 "ResourceRecordSet": {
                     "Name": "'$RECORD_NAME'",
