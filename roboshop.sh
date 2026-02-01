@@ -6,9 +6,9 @@ AMI_ID="ami-0220d79f3f480ecf5"
 for instance in $@
 do
     instance_id=$( aws ec2 run-instances \
-    --image-id $AMI_ID \        # Replace with your AMI ID
-    --instance-type "t3.micro" \  # Replace with your instance type
-    --security-group-ids $SG_ID \ # Replace with your SG ID
+    --image-id $AMI_ID \
+    --instance-type "t3.micro" \
+    --security-group-ids $SG_ID \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query 'Instances[0].InstanceId' \
     --output text )
