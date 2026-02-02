@@ -51,8 +51,8 @@ validate $? "moving to app directory"
 unzip /tmp/shipping.zip  &>>$logs_file
 validate $? "unzip shipping code"
 
-cd /app  &>>$logs_file
-mvn clean package
+cd /app  
+mvn clean package &>>$logs_file
 validate $? "installing and building shipping"
 
 mv target/shipping-1.0.jar shipping.jar 
@@ -67,13 +67,13 @@ validate $? "loading the service"
 dnf install mysql -y  &>>$logs_file
 validate $? "installing mysql"
 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
-mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$logs_file
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$logs_file
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$logs_file
 
 
 systemctl enable shipping
-systemctl start shipping
+systemctl start shipping  &>>$logs_file
 validate $? "enabled and started shipping"
 
 
