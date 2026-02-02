@@ -30,7 +30,7 @@ validate() {
 dnf module disable nodejs -y &>> $logs_file
 validate $? "disabling nodejs default module"
 
-dnf module enable nodejs -y &>> $logs_file
+dnf module enable nodejs:20 -y &>> $logs_file
 validate $? "enabling nodejs 20"
 
 dnf install nodejs -y &>> $logs_file
@@ -41,7 +41,7 @@ if [ $? -ne 0 ]; then
    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $logs_file
    validate $? "Creating system user"
 else
-   echo "user already created"
+   echo -e "Roboshop user already exist..$Y Skipping $N"
 fi      
 
 mkdir -p /app 
@@ -52,6 +52,9 @@ validate $? "downloading catalogue code"
 
 cd /app 
 validate $? "moving to app directory"
+
+rm -rf /app/*
+validate $? "Removing existing code"
 
 unzip /tmp/catalogue.zip &>> $logs_file
 validate $? "Unzip catalogue code"
