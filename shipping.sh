@@ -84,7 +84,7 @@ else
    echo -e "Data is already loaded, $Y Skipping $N"
 fi   
 
-ssystemctl restart shipping  &>>$logs_file
+systemctl restart shipping  &>>$logs_file
 validate $? "restarted shipping"
 
 
