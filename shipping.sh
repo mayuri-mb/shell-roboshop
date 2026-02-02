@@ -64,6 +64,13 @@ validate $? "moving and renaming shipping"
 cp $script_dir/shipping.service /etc/systemd/system/shipping.service &>>$logs_file
 validate $? "creating system user"
 
+systemctl daemon-reload
+validate $? "load the service"
+
+systemctl enable shipping
+systemctl start shipping  &>>$logs_file
+validate $? "enabled and started shipping"
+
 dnf install mysql -y  &>>$logs_file
 validate $? "installing mysql"
 
@@ -77,9 +84,8 @@ else
    echo -e "Data is already loaded, $Y Skipping $N"
 fi   
 
-systemctl enable shipping
-systemctl start shipping  &>>$logs_file
-validate $? "enabled and started shipping"
+ssystemctl restart shipping  &>>$logs_file
+validate $? "restarted shipping"
 
 
 
