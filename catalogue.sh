@@ -8,7 +8,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-script_dir=$pwd
+script_dir=$PWD
 mongodb_host=mongodb.daws-88s.online
 
 if [ $user -ne 0 ]; then
