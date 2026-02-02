@@ -1,7 +1,7 @@
 #!/bin/bash
 
 user=$(id -u)
-log_folder="/var/logs/shell-roboshop"
+log_folder="/var/log/shell-roboshop"
 log_file="/var/logs/$0.log"
 
 R="\e[31m"
@@ -19,7 +19,7 @@ fi
 mkdir -p $logs_folder
 
 validate() {
-    if [ $1 -ne 0]; then
+    if [ $1 -ne 0 ]; then
        echo -e "$2 $R failed $N"  | tee -a $log_file
        exit 1
     else 
