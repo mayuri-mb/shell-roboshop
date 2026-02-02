@@ -2,7 +2,7 @@
 
 user=$(id -u)
 logs_folder="/var/log/shell-roboshop"
-logs_file="/var/logs/$0.log"
+logs_file="$logs_folder/$0.log"
 
 R="\e[31m"
 G="\e[32m"
