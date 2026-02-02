@@ -28,7 +28,7 @@ validate() {
     fi   
 }
 
-cp $script_dir/rabbitmq.repo /etc/systemd/system/rabbitmq.repo
+cp $script_dir/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 validate $? "added rabitmq repo"
 
 dnf install rabbitmq-server -y
