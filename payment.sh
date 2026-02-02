@@ -39,13 +39,16 @@ else
 fi
 
 mkdir -p /app  &>>$logs_file
-validate "creating app directory"
+validate $ "creating app directory"
 
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip  &>>$logs_file
 validate $? "downloading payment code"
 
 cd /app  &>>$logs_file
 validate $? "moving to app directory"
+
+rm -rf /app/*
+validate "Removing existing code"
 
 unzip /tmp/payment.zip &>>$logs_file
 validate "unzip code"
