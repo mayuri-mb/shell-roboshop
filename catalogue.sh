@@ -11,7 +11,7 @@ N="\e[0m"
 script_dir=$(pwd)
 mongodb_host=mongodb.daws-88s.online
 
-if [ $user -ne 0]
+if [ $user -ne 0]; then
    echo -e "$R Please run this script with root user access $N" | tee -a $log_file
    exit 1
 fi
@@ -19,7 +19,7 @@ fi
 mkdir -p $logs_folder
 
 validate() {
-    if [ $1 -ne 0]: then
+    if [ $1 -ne 0]; then
        echo -e "$2 $R failed $N"  | tee -a $log_file
        exit 1
     else 
