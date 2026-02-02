@@ -62,7 +62,7 @@ validate $? "Unzip catalogue code"
 npm install &>> $logs_file
 validate $? "downloading dependencies"
 
-cp $script_dir/catalogue.service /etc/systemd/system/catalogue.service &>> $logs_file
+cp $script_dir/catalogue.service /etc/systemd/system/catalogue.service  
 validate $? "Created systemctl service"
 
 systemctl daemon reload
