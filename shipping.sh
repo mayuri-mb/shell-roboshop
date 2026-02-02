@@ -31,13 +31,12 @@ validate() {
 dnf install maven -y &>>$logs_file
 validate $? "installing maven"
 
-
 id roboshop &>>$logs_file
-if [ $? -ne 0 ]
-   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$logs_file
+if [ $? -ne 0 ]; then
+   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>>$logs_file
    echo "Creating system user"
 else
-   echo "Roboshop user already exist"
+   echo "Roboshop user already exist $Y Skipping $N"
 fi
 
 mkdir -p /app &>>$logs_file
@@ -46,13 +45,13 @@ validate $? "creating app directory"
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$logs_file
 validate $? "copying shipping code"
 
-cd /app
+cd /app &>>$logs_file
 validate $? "moving to app directory"
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip  &>>$logs_file
 validate $? "unzip shipping code"
 
-cd /app
+cd /app  &>>$logs_file
 mvn clean package
 validate $? "installing and building shipping"
 
@@ -62,10 +61,10 @@ validate $? "moving and renaming shipping"
 cp $script_dir/shipping.service /etc/systemd/system/shipping.service &>>$logs_file
 validate $? "creating system user"
 
-systemctl daemon-reload
+systemctl daemon-reload 
 validate $? "loading the service"
 
-dnf install mysql -y 
+dnf install mysql -y  &>>$logs_file
 validate $? "installing mysql"
 
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
