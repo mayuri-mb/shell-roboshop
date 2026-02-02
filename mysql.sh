@@ -30,10 +30,10 @@ validate() {
 dnf install mysql-server -y &>>$logs_file
 validate $? "installing mysql"
 
-systemctl enable mysqld
+systemctl enable mysqld &>> $logs_file
 validate $? "enabling mysql"
 
-systemctl start mysqld
+systemctl start mysqld  &>> $logs_file
 validate $? "starting mysql"
 
 #get the password from user
