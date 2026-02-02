@@ -26,24 +26,25 @@ validate() {
     fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $logs_file
 validate $? "disabling nodejs default module"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $logs_file
 validate $? "enabling nodejs:20 module"
 
-dnf install nodejs -y
+dnf install nodejs -y &>> $logs_file
 validate $? "installing nodejs"
 
-id roboshop
+id roboshop &>> $logs_file
 if [ $? -ne 0 ]; then
-   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $logs_file
    echo "created system user"
 else
    echo "Roboshop user already exist, $Y Skipping $N"
 fi
 
 mkdir -p /app
+validate $? "creating app directory"
 
 curl -l -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>> $logs_file
 validate $? "downloading user code"
