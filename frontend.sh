@@ -33,21 +33,19 @@ dnf module enable nginx:1.24 -y &>>$logs_file
 dnf install nginx -y  &>>$logs_file
 validate $? "Installing nginx"
 
-systemctl enable nginx 
-systemctl start nginx  &>>$logs_file
+systemctl enable nginx  &>>$logs_file
+systemctl start nginx  
 validate $? "enabled and started nginx"
 
 rm -rf /usr/share/nginx/html/*   &>>$logs_file
 validate $? "Remove existing data"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip  &>>$logs_file
-validate $? "downloading frontend code"
-
 cd /usr/share/nginx/html  &>>$logs_file
-validate $? "moving to html folder"
-
 unzip /tmp/frontend.zip  &>>$logs_file
-validate $? "unzip code"
+validate $? "downloaded and unzipped frontend"
+
+rm -rf /etc/nginx/nginx.conf
 
 cp $script_dir/nginx.conf /etc/nginx/nginx.conf  &>>$logs_file
 validate $? "copied nginx conf file"
