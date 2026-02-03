@@ -3,13 +3,11 @@
 user=$(id -u)
 logs_folder="/var/log/shell-roboshop"
 logs_file="$logs_folder/$0.log"
-
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 script_dir=$PWD
-mongodb_host=mongodb.daws-88s.online
 MYSQL_HOST=mysql.daws-88s.online
 
 if [ $user -ne 0 ]; then
@@ -62,20 +60,14 @@ mv target/shipping-1.0.jar shipping.jar
 validate $? "moving and renaming shipping"
 
 cp $script_dir/shipping.service /etc/systemd/system/shipping.service &>>$logs_file
-validate $? "creating system user"
-
-systemctl daemon-reload
-validate $? "load the service"
-
-systemctl enable shipping
-systemctl start shipping  &>>$logs_file
-validate $? "enabled and started shipping"
+validate $? "creating systemctl service"
 
 dnf install mysql -y  &>>$logs_file
 validate $? "installing mysql"
 
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
+
    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$logs_file
    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$logs_file
    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$logs_file
@@ -84,8 +76,9 @@ else
    echo -e "Data is already loaded, $Y Skipping $N"
 fi   
 
-systemctl restart shipping  &>>$logs_file
-validate $? "restarted shipping"
+systemctl enable shipping &>>$logs_file
+systemctl start shipping  
+validate $? "enabled and started shipping"
 
 
 
